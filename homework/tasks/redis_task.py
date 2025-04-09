@@ -25,4 +25,5 @@ class UsersByTitleStorage:
         с заданным title.
         """
         users_w_titles = self._client.smembers(title)
-        return list(users_w_titles)
+        result = [int(user) for user in users_w_titles]
+        return result
