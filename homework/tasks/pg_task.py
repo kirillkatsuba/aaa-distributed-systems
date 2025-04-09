@@ -40,11 +40,11 @@ class ItemStorage:
         # YOUR CODE GOES HERE
 
         query = """
-            create table items (
-            item_id integer unique not null,
-            user_id integer not null,
-            title text not null,
-            description text not null);
+            CREATE TABLE items (
+            item_id INTEGER UNIQUE NOT NULL,
+            user_id INTEGER NOT NULL,
+            title TEXT NOT NULL,
+            description TEXT NOT NULL);
         """
         self._pool.execute(query=query)
 
@@ -59,7 +59,7 @@ class ItemStorage:
         items_values = [
             (item.item_id, item.user_id, item.title, item.description) for item in items
         ]
-        self._pool.executemany("insert into items values(?, ?, ?, ?);", items_values)
+        self._pool.executemany("INSERT INTO items VALUES(?, ?, ?, ?);", items_values)
 
     async def find_similar_items(
         self, user_id: int, title: str, description: str
@@ -68,8 +68,8 @@ class ItemStorage:
         Напишите код для поиска записей, имеющих указанные user_id, title и description.
         """
         result = self._pool.fetch(
-            """select * from items 
-            where user_id=$1 and title=$2 and description=$3;""",
+            """SELECT * FROM items 
+            WHERE user_id=$1 AND title=$2 AND description=$3;""",
             [user_id, title, description],
             record_class=ItemEntry,
         )
